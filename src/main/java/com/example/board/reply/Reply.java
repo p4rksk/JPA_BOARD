@@ -1,5 +1,7 @@
 package com.example.board.reply;
 
+import java.time.LocalDateTime;
+
 import com.example.board.board.Board;
 import com.example.board.user.User;
 
@@ -35,15 +37,37 @@ public class Reply {
     private User user;
 
     @Column(nullable = false)
-    private String content;
+    private String comment;
+
+    @Column(nullable = true)
+    private LocalDateTime commentAt;
+
+    @Column(nullable = true)
+    private LocalDateTime createdAt;
+    
+    @Column(nullable = true)
+    private LocalDateTime modifiedAt;
+
+    @Column(nullable = true)
+    private LocalDateTime updatedAt;
 
     @Builder
-    public Reply(Integer id, Board board, User user, String content) {
+    public Reply(Integer id, Board board, User user, String comment, LocalDateTime commentAt, LocalDateTime createdAt,
+            LocalDateTime modifiedAt, LocalDateTime updatedAt) {
         this.id = id;
         this.board = board;
         this.user = user;
-        this.content = content;
+        this.comment = comment;
+        this.commentAt = commentAt;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.updatedAt = updatedAt;
     }
 
+   
+    
+    
+    
+    
     
 }
