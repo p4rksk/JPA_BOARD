@@ -1,34 +1,66 @@
 package com.example.board.board;
 
+import java.util.List;
+
+import org.h2.engine.Session;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.board.board.BoardResponse.BoardDetailDTO;
+import com.example.common.SessionUser;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 @Controller
-@RequestMapping("/board")
+@RequiredArgsConstructor
 public class BoardController {
-    
+    private final BoardService boardService;
+    private final HttpSession session;
+
+
+
     @GetMapping("/")
-    public String main() {
+    public String main(Model model) {
+        List<BoardResponse.BoardListDTO> boardList = boardService.boardListDTO();
+        model.addAttribute("boardList", boardList);
         return "index";
     }
     
-    @GetMapping("/{id}") 
-    public String boardDetailForm(@PathVariable int id) {
+    @GetMapping("/board/{id}") 
+    public String boardDetailForm(@PathVariable("id") int id,Model model) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+        BoardResponse.BoardDetailDTO board = boardService.boardDetail(id, sessionUser);
+        model.addAttribute("board", board);
         return "board/detailForm";
     }
 
-    @GetMapping("/saveForm")
+    @GetMapping("/board/saveForm")
     public String boardSaveForm() {
-        
-        return "board/saveForm";
+        SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+        return "board/saveform";
+    }
+
+    @PostMapping("/board/save")
+    public String boardSave(BoardRequest.SaveDTO reqDto, Model model) {       
+        SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+        BoardResponse.BoardSaveDTO board = boardService.boardSave(sessionUser, reqDto);
+        model.addAttribute("board",board);
+        System.out.println("담겼노노");
+        return "redirect: index";
     }
     
-   @GetMapping("/{id}/updateForm")
+    
+   @GetMapping("/board/{id}/updateForm")
    public String boardUpdatedForm() {
-       
+       SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
         return "board/updateForm";
    }
    

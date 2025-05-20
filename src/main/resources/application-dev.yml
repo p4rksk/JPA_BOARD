@@ -22,8 +22,10 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 10
-    open-in-view: false
+    open-in-view: true
   mustache:
+    suffix: .mustache
+    prefix: classpath:/templates/
     servlet:
       expose-session-attributes: true
       expose-request-attributes: true

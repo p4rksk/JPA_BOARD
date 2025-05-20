@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.board.user.UserInterface.UserNameProjection;
+import com.example.common.SessionUser;
 import com.example.common.util.ApiUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -62,8 +63,20 @@ public class UserController {
    @PostMapping("/login")
    public String login(UserRequest.loginDTO reqDTO) {
     UserResponse.loginDTO repDTO  = userService.login(reqDTO);
-    session.setAttribute("sessionUser", repDTO);
+
+    SessionUser sessionUser = SessionUser.builder()
+        .id(repDTO.getUserId())
+        .userName(repDTO.getUserName())
+        .build();
+        
+    session.setAttribute("sessionUser", sessionUser);
        return "redirect:/";
    }
+
+   @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
+        return "redirect:/";
+    }
    
 }
