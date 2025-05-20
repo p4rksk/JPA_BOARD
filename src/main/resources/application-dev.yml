@@ -7,8 +7,7 @@ server:
 
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;MODE=MySQL
+    url: jdbc:h2:~/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
     username: sa
     password:
   h2:
@@ -30,6 +29,7 @@ spring:
       expose-request-attributes: true
   sql:
     init:
+      mode: always
       data-locations:
         - classpath:db/data.sql
 

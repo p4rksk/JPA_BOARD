@@ -20,4 +20,17 @@ public class UserRequest {
         }
     }
     
+    @NoArgsConstructor
+    @Data
+    public static class loginDTO {
+        private String userName;
+        private String password;
+        
+        public loginDTO(String userName, String password) {
+            this.userName = userName;
+            this.password = password;
+        }
+
+        
+    }
 }
