@@ -56,10 +56,27 @@ public class BoardResponse {
      public static class BoardSaveDTO {
         private Integer id;
         private String title;
+        private String content;
         
-        public BoardSaveDTO(Integer id, String title) {
+        public BoardSaveDTO(Integer id, String title, String content) {
             this.id = id;
             this.title = title;
+            this.content = content;
+        }
+        
+    }
+
+    @NoArgsConstructor
+    @Data
+     public static class BoardUpdateDTO {
+        private Integer id;
+        private String title;
+        private String content;
+
+        public BoardUpdateDTO(Integer id, String title, String content) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
         }
         
     }

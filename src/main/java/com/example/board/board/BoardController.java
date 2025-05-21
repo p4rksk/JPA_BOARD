@@ -51,17 +51,35 @@ public class BoardController {
     @PostMapping("/board/save")
     public String boardSave(BoardRequest.SaveDTO reqDto, Model model) {       
         SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
-        BoardResponse.BoardSaveDTO board = boardService.boardSave(sessionUser, reqDto);
-        model.addAttribute("board",board);
-        System.out.println("담겼노노");
-        return "redirect: index";
+        boardService.boardSave(sessionUser, reqDto);
+
+        return "redirect:/";
     }
     
     
    @GetMapping("/board/{id}/updateForm")
-   public String boardUpdatedForm() {
-       SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+   public String boardUpdatedForm(@PathVariable("id") int id, Model model) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+        Board board = boardService.boardFindById(id);
+        model.addAttribute("board", board);
+    
         return "board/updateForm";
+   }
+   
+   @PostMapping("/board/{id}/update")
+   public String update(@PathVariable("id") int id, BoardRequest.UpdateDTO reqDTO, Model model) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+        boardService.boardUpdate(id, sessionUser, reqDTO);
+
+       return "redirect:/";
+   }
+   
+   @PostMapping("/board/{id}/delete")
+   public String delete(@PathVariable("id")int id) {
+        SessionUser sessionUser = (SessionUser) session.getAttribute("sessionUser");
+        boardService.boardDelete(id, sessionUser);
+
+       return "redirect:/";
    }
    
     

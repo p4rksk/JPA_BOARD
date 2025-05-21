@@ -4,23 +4,17 @@
     <div class="card">
         <div class="card-header"><b>글쓰기 화면입니다</b></div>
         <div class="card-body">
-            <form action="/board/save" method="post" id="saveForm" enctype="application/x-www-form-urlencoded">
+            <form action="/board/save" method="post" enctype="application/x-www-form-urlencoded">
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Enter title" name="title">
                 </div>
                 <div class="mb-3">
                     <textarea class="form-control" rows="5" name="content"></textarea>
                 </div>
-                <div class="btn btn-primary form-control" onclick="submitForm();">글쓰기완료</div>
+                <button class="btn btn-primary form-control">글쓰기완료</button>
             </form>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function submitForm() {
-        const form = document.getElementById("saveForm");
-        form.action = "/board/save";
-        form.submit(); // 🚀 이게 핵심
-    }
-</script>
+
 {{> /layout/footer}}
